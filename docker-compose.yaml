@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:17
+    container_name: prod_trace_db
+    environment:
+      POSTGRES_DB: prod_trace
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
