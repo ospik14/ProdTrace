@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Part
 from .serializers import PartSerializer
+from .services import issuance_processing
 
 class PartList(APIView):
     def get(self, request):
@@ -16,5 +17,14 @@ class PartList(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+
+        return Response(serializer.errors, status=400)
+
+class PaertsDelivery(APIView):
+    def post(self, request):
+        serializer = PartSerializer(data=request.data)
+
+        if serializer.is_valid():
+            return issuance_processing(serializer)
 
         return Response(serializer.errors, status=400)
