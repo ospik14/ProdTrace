@@ -20,8 +20,8 @@ class PartList(APIView):
 
         return Response(serializer.errors, status=400)
 
-class PaertsDelivery(APIView):
-    def post(self, request):
+class PartsDelivery(APIView):
+    def post(self, request, pk):
         serializer = PartSerializer(data=request.data)
 
         if serializer.is_valid():
