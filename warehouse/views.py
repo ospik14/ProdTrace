@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Part
-from .serializers import PartSerializer
+from .serializers import PartSerializer, StockOperationSerializer
 from .services import issuance_processing
 
 class PartList(APIView):
@@ -22,9 +22,10 @@ class PartList(APIView):
 
 class PartsDelivery(APIView):
     def post(self, request, pk):
-        serializer = PartSerializer(data=request.data)
+        serializer = StockOperationSerializer(data=request.data)
 
         if serializer.is_valid():
-            return issuance_processing(serializer)
+            issuance_processing(serializer, pk)
+            return Response(serializer.data)
 
         return Response(serializer.errors, status=400)

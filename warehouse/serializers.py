@@ -4,17 +4,10 @@ from .models import Part, StockOperation
 class PartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Part
-        fields = ['id', 'name', 'category', 'quantity', 'description']
+        fields = '__all__'
 
 class StockOperationSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockOperation
-        fields = [
-            'id', 
-            'part', 
-            'operation_type', 
-            'quantity', 
-            'performed_by',
-            'recipient',
-            'created_at'
-        ]
+        fields = '__all__'
+        read_only_fields = ['id', 'part', 'created_at']
