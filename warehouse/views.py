@@ -25,7 +25,13 @@ class PartsDelivery(APIView):
         serializer = StockOperationSerializer(data=request.data)
 
         if serializer.is_valid():
-            issuance_processing(serializer, pk)
+            issuance_processing(serializer.validated_data, pk)
             return Response(serializer.data)
 
         return Response(serializer.errors, status=400)
+
+    def delete(self, request, pk):
+        part = Part.objects.get(pk=pk)
+        part.delete()
+
+        return Response(status=204)

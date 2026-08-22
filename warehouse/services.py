@@ -1,25 +1,25 @@
 from django.db import transaction
-from .models import Part
+from .models import Part, StockOperation
 from .serializers import StockOperationSerializer
 from .exceptions import InsufficientStockError
 
-def issuance_processing(serializer: StockOperationSerializer, pk: int):
-    serializer.save(part_id=pk)
-    data = serializer.validated_data
-    part = Part.objects.get(pk=pk)
+def issuance_processing(data: dict, pk: int):
+    
+    operation_type = data['operation_type']
+    quantity = data['quantity']
 
-    if data.get('operation_type') == 1:
-        with transaction.atomic():
-            part.quantity += data.get('quantity')
-            part.save()
-            serializer.save()
-            return data
+    with transaction.atomic():
+        part = Part.objects.select_for_update().get(pk=pk)
 
-    if part.quantity >= data.get('quantity'):
-        with transaction.atomic():
-            part.quantity -= data.get('quantity')
-            part.save()
-            serializer.save()
-            return data
-    else:
-        raise InsufficientStockError()
+        if operation_type == 1:
+            part.quantity += quantity
+        elif operation_type in (2, 3):
+            if part.quantity < quantity:
+                raise InsufficientStockError()
+            
+            part.quantity -= quantity
+
+        part.save()
+        StockOperation.objects.create(**data, part=part)
+    
+                

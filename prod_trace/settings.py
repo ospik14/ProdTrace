@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
 
-SECRET_KEY = 'django-insecure-&(9qxkc#%x=a1nfc4_j7(@wj=w5&g_w7@4u1vplhynkdda^t1j'
+SECRET_KEY = os.getenv('SECRET_KEY')
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 
@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'warehouse',
 ]
 
