@@ -1,6 +1,5 @@
 from django.db import transaction
 from .models import Part, StockOperation
-from .serializers import StockOperationSerializer
 from .exceptions import InsufficientStockError
 
 def issuance_processing(data: dict, pk: int):
