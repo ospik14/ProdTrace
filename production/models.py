@@ -1,13 +1,13 @@
 from django.db import models
 
 class ProductionStages(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True)
     price = models.PositiveIntegerField()
 
 
 class DroneModels(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True)
     description = models.CharField(null=True)
 
@@ -18,7 +18,7 @@ class Drone(models.Model):
         DEFECTIVE = 3
         SHIPPED = 4
 
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     barcode = models.CharField(unique=True, db_index=True)
     model_id = models.ForeignKey(
         "DroneModels",
@@ -29,7 +29,7 @@ class Drone(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class DroneStageLogs(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     drone_id = models.ForeignKey(
         "Drone",
         on_delete=models.CASCADE,

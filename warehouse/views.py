@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Part
+from .models import Part, StockOperation
 from .serializers import PartSerializer, StockOperationSerializer
 from .services import issuance_processing
 
@@ -35,3 +35,10 @@ class PartsDelivery(APIView):
         part.delete()
 
         return Response(status=204)
+
+class OperationList(APIView):
+    def get(self, request):
+        operations = StockOperation.objects.all()
+        serializer = StockOperationSerializer(operations, many=True)
+
+        return Response(serializer.data)
