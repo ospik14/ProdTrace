@@ -25,7 +25,10 @@ class Drone(models.Model):
         on_delete=models.CASCADE,
         related_name='Drone'
     )
-    status = models.IntegerField(choices=Statuses.choices)
+    status = models.IntegerField(
+        choices=Statuses.choices,
+        default=1
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
 class DroneStageLogs(models.Model):
