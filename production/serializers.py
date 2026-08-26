@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import DroneModels, Drone, ProductionStages
+from .models import DroneModels, Drone, ProductionStages, DroneStageLogs
 
 class DroneModelsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,3 +18,9 @@ class StagesSerializer(serializers.ModelSerializer):
         model = ProductionStages
         fields = '__all__'
         read_only_fields = ['id']
+
+class StagesLogsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DroneStageLogs
+        fields = '__all__'
+        read_only_fields = ['id', 'is_defective']

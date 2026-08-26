@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
-from .serializers import DroneModelsSerializer, DroneSerializer, StagesSerializer
-from .models import DroneModels, Drone, ProductionStages
+from .serializers import DroneModelsSerializer, DroneSerializer, StagesSerializer, StagesLogsSerializer
+from .models import DroneModels, Drone, ProductionStages, DroneStageLogs
 
 class DronModelList(APIView):
     def get(self, request):
@@ -83,3 +83,20 @@ class StageList(APIView):
             return Response(data=serializer.data)
         
         return Response(serializer.errors, status=400)
+
+class StagesCompletion(APIView):
+    def get(self, request):
+        data = DroneStageLogs.objects.all()
+        serializer = StagesLogsSerializer(data, many=True)
+         
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = StagesLogsSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data)
+
+        return Response(serializer.errors, status=400)
+        
