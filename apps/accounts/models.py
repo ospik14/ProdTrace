@@ -1,15 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-class User(models.Model):
+class User(AbstractUser):
     class Roles(models.IntegerChoices):
         ADMIN = 1,
         MANAGER = 2,
         WORKER = 3
 
     id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=255, unique=True)
-    password = models.CharField()
-    full_name = models.CharField(unique=True)
+    phone = models.CharField(max_length=20, blank=True)
     role = models.IntegerField(choices=Roles.choices)
-    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
