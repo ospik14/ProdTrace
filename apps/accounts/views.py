@@ -21,8 +21,7 @@ class UserList(APIView):
         user = User.objects.get(pk=pk)
         serializer = UserSerializer(user, data=request.data, partial=True)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-        return Response(serializer.errors, status=400)
+        return Response(serializer.data)

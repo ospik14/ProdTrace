@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import WorkerList
+from .views import UserList
 
 urlpatterns = [
-    path('workers/', WorkerList.as_view())
+    path('users/', UserList.as_view())
 ]

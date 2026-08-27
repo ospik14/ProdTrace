@@ -25,8 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'warehouse',
-    'production',
+    'apps.warehouse',
+    'apps.production',
+    'apps.accounts'
 ]
 
 MIDDLEWARE = [
@@ -122,5 +123,5 @@ MAILERS = {
 }
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'warehouse.exception_handler.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'apps.warehouse.exception_handler.custom_exception_handler'
 }
