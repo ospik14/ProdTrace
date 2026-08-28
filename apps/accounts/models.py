@@ -9,5 +9,5 @@ class User(AbstractUser):
 
     id = models.AutoField(primary_key=True)
     phone = models.CharField(max_length=20)
-    role = models.IntegerField(choices=Roles.choices)
+    role = models.IntegerField(choices=Roles.choices, default=Roles.ADMIN)
     created_at = models.DateTimeField(auto_now_add=True)
